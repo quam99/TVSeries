@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace IO.Swagger {
+namespace IO.TVSeries {
     
     
     /// <summary>
@@ -2363,7 +2363,7 @@ namespace IO.Swagger {
         }
     }
 }
-namespace IO.Swagger.ds1TableAdapters {
+namespace IO.TVSeries.ds1TableAdapters {
     
     
     /// <summary>

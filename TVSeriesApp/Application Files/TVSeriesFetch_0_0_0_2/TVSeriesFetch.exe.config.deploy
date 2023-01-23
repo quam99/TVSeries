@@ -3,7 +3,7 @@
     <configSections>
     </configSections>
     <connectionStrings>
-        <add name="IO.Swagger.Properties.Settings.IMDBConnectionString"
+        <add name="IO.TVSeries.Properties.Settings.IMDBConnectionString"
             connectionString="Data Source=(localdb)\mssqllocaldb;Initial Catalog=IMDB;Integrated Security=True;Context Connection=False"
             providerName="System.Data.SqlClient" />
     </connectionStrings>

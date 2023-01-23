@@ -1,4 +1,4 @@
-﻿namespace IO.Swagger
+﻿namespace IO.TVSeries
 {
 
 

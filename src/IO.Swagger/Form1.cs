@@ -1,5 +1,5 @@
-using IO.Swagger;
-using IO.Swagger.ds1TableAdapters;
+using IO.TVSeries;
+using IO.TVSeries.ds1TableAdapters;
 using IO.TVSeries.Model;
 using Newtonsoft.Json;
 using System;
@@ -310,9 +310,9 @@ namespace IO.TVSeries
             using (mgr1.IMDbSeriesTableAdapter = sqlAdapter1)
             using (mgr1.IMDbSeriesInfoTableAdapter = sqlAdapter2)
             {
-                DataSet ds1 = new IO.Swagger.ds1();
-                mgr1.IMDbSeriesTableAdapter.Fill((IO.Swagger.ds1.IMDbSeriesDataTable)ds1.Tables[1]);
-                mgr1.IMDbSeriesInfoTableAdapter.Fill((IO.Swagger.ds1.IMDbSeriesInfoDataTable)ds1.Tables[0]);
+                DataSet ds1 = new ds1();
+                mgr1.IMDbSeriesTableAdapter.Fill((ds1.IMDbSeriesDataTable)ds1.Tables[1]);
+                mgr1.IMDbSeriesInfoTableAdapter.Fill((ds1.IMDbSeriesInfoDataTable)ds1.Tables[0]);
                 mgr1.UpdateOrder = TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
 
                 foreach (DataRow row1 in ds1.Tables[1].Select("status is null", "IMDbRating DESC").Distinct())  // IMDbSeries  DataRow row = table.Select("Status is null").FirstOrDefault();
@@ -398,7 +398,7 @@ namespace IO.TVSeries
             if (cbARFetch.Checked)  // Based to IMDBSeries table retreives data from IMDB api for all series  
             {
                 responseData_ = null;
-                IO.Swagger.ds1TableAdapters.TableAdapterManager mgr1 = new IO.Swagger.ds1TableAdapters.TableAdapterManager();
+                ds1TableAdapters.TableAdapterManager mgr1 = new ds1TableAdapters.TableAdapterManager();
                 IMDbSeriesInfoTableAdapter sqlAdapter1 = new IMDbSeriesInfoTableAdapter();
                 IMDbEpisodesTableAdapter sqlAdapter2 = new IMDbEpisodesTableAdapter();
                 using (mgr1.IMDbSeriesInfoTableAdapter = sqlAdapter1)
