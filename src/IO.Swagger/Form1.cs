@@ -501,8 +501,8 @@ namespace IO.TVSeries
                                                     {
                                                         try
                                                         {
-                                                            String iMBDRating = !String.IsNullOrEmpty(item.ImDbRating) ? item.ImDbRating.Trim() : "NULL";   // Ας κάνουμε έλεγχο. Για να μην σκάσει μετά η μετατροπή σε αριθμό
-                                                            String iMBDRatingCount = !String.IsNullOrEmpty(item.ImDbRatingCount) ? item.ImDbRatingCount.Trim() : "NULL";  // Ομοίως
+                                                            String iMBDRating = !String.IsNullOrEmpty(item.ImDbRating) ? item.ImDbRating.Trim() : "0";   // Ας κάνουμε έλεγχο. Για να μην σκάσει μετά η μετατροπή σε αριθμό
+                                                            String iMBDRatingCount = !String.IsNullOrEmpty(item.ImDbRatingCount) ? item.ImDbRatingCount.Trim() : "0";  // Ομοίως
                                                             String seaNum = !String.IsNullOrEmpty(item.SeasonNumber) ? item.SeasonNumber.Trim() : "0";  // Ομοίως
                                                             String epiNum = !String.IsNullOrEmpty(item.EpisodeNumber) ? item.EpisodeNumber.Trim() : "0";  // Ομοίως
                                                             // Για να βλέπουμε στην κονσόλα κάποιες πληροφορίες
