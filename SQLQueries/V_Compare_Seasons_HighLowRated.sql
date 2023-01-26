@@ -48,10 +48,10 @@ GROUP by
 		END
 order by Rating DESC, [Seasons] DESC, count(serinf.[Id]) DESC;
 
--- ερώτημα 2
+-- ερώτημα 2  Ποιός Κύκλος των πιο δημοφιλών σειρών έχει την υψηλότερη/χαμηλότερη βαθμολογία
 SELECT s.id, MAX(s.Title) Title, AVG(e.IMDbRating) Rate, e.SeasonNumber, SUM(isnull(e.IMDBRatingCount,0)) Votes, s.IMDbRating
 FROM IMDbSeries as s LEFT JOIN IMDbEpisodes as e ON s.Id = e.IMDbId, IMDbSeriesInfo i, 
-	(SELECT id FROM IMDbSeries WHERE IMDbRating > = 9 AND IMDbRatingVotes > 1000) ss
+	(SELECT id FROM IMDbSeries WHERE /*IMDbRating > = 9 AND*/ IMDbRatingVotes > 1500) ss
 WHERE	s.Id = i.Id AND
 		YEAR(i.ReleaseDate) < 2019 AND
 		s.IMDbRating >= 9 AND
@@ -64,7 +64,7 @@ GROUP BY s.id, e.SeasonNumber, s.IMDbRating
 ORDER BY s.IMDbRating DESC, s.id, Rate DESC ;
 
 
--- 3 ερώτημα
+-- 3 ερώτημα για τα περισσότερα επεισόδια των πιο δημοφιλών σειρών
 SELECT imdbid, MAX(s.title), Count(e.EpId) #Episodes, 
 	MAX(CASE
 		WHEN e.SeasonNumber > 200 THEN SeasonNumber - Convert(smallint,IsNull(Year(ReleaseDate),SeasonNumber))
@@ -80,14 +80,111 @@ GROUP BY e.IMDbId
 ORDER BY Count(e.EpId) DESC, MAX(e.SeasonNumber) DESC;
 
 
+SELECT e.IMDbId, max(s.Title), e.SeasonNumber, max(EpisodeNumber) #Episodes, avg(e.imdbrating) EpRating, sum(isnull(imdbRatingCount,0)) Votes 
+from IMDbSeries s left join imdbEpisodes e on s.Id = e.IMDbId
+WHERE e.IMDbId in ('tt5232792',
+'tt10116578',
+'tt10116578',
+'tt11207734',
+'tt11207734',
+'tt8560994',
+'tt8560994',
+'tt7678620',
+'tt7678620',
+'tt7865962',
+'tt7865962',
+'tt7866314',
+'tt7866314',
+'tt8284230',
+'tt8284230',
+'tt12423408',
+'tt12423408',
+'tt3787912',
+'tt3787912',
+'tt4834232',
+'tt4834232',
+'tt6407712',
+'tt6407712',
+'tt2861424',
+'tt2861424',
+'tt9169598',
+'tt9169598',
+'tt0944947',
+'tt0944947',
+'tt1910272',
+'tt1910272',
+'tt2147999',
+'tt2147999',
+'tt2185037',
+'tt2185037',
+'tt2560140',
+'tt2560140',
+'tt3212600',
+'tt4062640',
+'tt4266402',
+'tt4266402',
+'tt4934214',
+'tt4934214',
+'tt7248250',
+'tt7248250',
+'tt9434996',
+'tt9434996')
+GROUP BY e.IMDbId, SeasonNumber
+ORDER BY e.IMDbId, avg(e.imdbrating) DESC, SeasonNumber DESC
 
 
-
-
-
-
-
-
+-- Στοιχεία για τα επισόδια και τους κύκλους των πιο δημοφιλών σειρών
+SELECT e.IMDbId, e.EpId, e.SeasonNumber, e.EpId, e.imdbrating EpRating, isnull(imdbRatingCount,0) Votes 
+from imdbEpisodes e 
+WHERE e.IMDbId in ('tt5232792',
+'tt10116578',
+'tt10116578',
+'tt11207734',
+'tt11207734',
+'tt8560994',
+'tt8560994',
+'tt7678620',
+'tt7678620',
+'tt7865962',
+'tt7865962',
+'tt7866314',
+'tt7866314',
+'tt8284230',
+'tt8284230',
+'tt12423408',
+'tt12423408',
+'tt3787912',
+'tt3787912',
+'tt4834232',
+'tt4834232',
+'tt6407712',
+'tt6407712',
+'tt2861424',
+'tt2861424',
+'tt9169598',
+'tt9169598',
+'tt0944947',
+'tt0944947',
+'tt1910272',
+'tt1910272',
+'tt2147999',
+'tt2147999',
+'tt2185037',
+'tt2185037',
+'tt2560140',
+'tt2560140',
+'tt3212600',
+'tt4062640',
+'tt4266402',
+'tt4266402',
+'tt4934214',
+'tt4934214',
+'tt7248250',
+'tt7248250',
+'tt9434996',
+'tt9434996')
+--GROUP BY e.IMDbId, SeasonNumber
+ORDER BY e.IMDbId, SeasonNumber, e.EpisodeNumber;
 
 
 
@@ -104,16 +201,16 @@ SELECT count(serinf.[Id]) as 'Series #',
 		AVG(ser.IMDbRatingVotes) as 'Aver. # Votes',
 		(SUM(ISNULL(ser.IMDbRatingVotes,0)/(CASE
 			WHEN Seasons = 0 Then 1
-			WHEN Seasons > 2000 then 
+			WHEN Seasons > 1990 then 
 				CASE WHEN Seasons - Year(serinf.ReleaseDate) <= 0 THEN 1 ELSE Seasons - Year(serinf.ReleaseDate) END
 			ELSE Seasons
 		END))/count(serinf.[Id])) as 'Aver Votes'
 FROM [IMDbSeriesInfo] serinf, [IMDbSeries] ser--, (Select (Seasons - Year(serinf.ReleaseDate))
 WHERE  serinf.[Id]= ser.[Id] AND
-		serinf.ReleaseDate between '1/1/2011' AND '31/12/2019'
+		serinf.ReleaseDate between '1/1/2010' AND '31/12/2019'
 GROUP BY CASE
 			WHEN Seasons = 0 Then 1
-			WHEN Seasons > 2000 then 
+			WHEN Seasons > 1990 then 
 				CASE WHEN Seasons - Year(serinf.ReleaseDate) <= 0 THEN 1 ELSE Seasons - Year(serinf.ReleaseDate) END
 			ELSE Seasons
 		END
